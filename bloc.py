@@ -2,6 +2,9 @@ import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox, simpledialog
 from tkinter.colorchooser import askcolor
+import subprocess
+import sys
+
 def nouveau_fichier():
     if len(text_area.get('1.0', tk.END)) > 1:  # Si le texte n'est pas vide
         result = messagebox.askyesno("Enregistrer", "Voulez-vous enregistrer le fichier actuel ?")
@@ -60,9 +63,10 @@ def taille():
     current_size = text_area.cget("font")
     text_area.config(font=(current_size,taille))
 
+def calculatrice():
+    subprocess.run([sys.executable, "CalcoTK.py"])
 
-
-
+    
 # Configuration de la fenêtre principale
 root = tk.Tk()
 root.title("Mon bloc note ")
@@ -93,6 +97,10 @@ option_menu = tk.Menu(bloc_note, tearoff=0)
 bloc_note.add_cascade(label="Option",menu=option_menu)
 option_menu.add_command(label="Taille", command=taille)
 option_menu.add_command(label="Couleur", command=couleur)
+
+outils_menu = tk.Menu(bloc_note, tearoff=0)
+bloc_note.add_cascade(label="Outils", menu=outils_menu)
+outils_menu.add_command(label="calculatrice", command=calculatrice)
 
 # Configurer la fenêtre pour utiliser la barre de menu créée
 root.config(menu=bloc_note)
